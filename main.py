@@ -2,7 +2,14 @@ from instabot import Bot
 from dotenv import load_dotenv
 import os
 import re
+import argparse
 from pprint import pprint
+
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-u", required=True, dest="url")
+    parser.add_argument("-n", required=True, dest="name")
+    return parser.parse_args()
 
 
 def get_taged_users(comment):
@@ -33,8 +40,8 @@ if __name__ == "__main__":
     passsword = os.getenv("pass")
     bot = Bot()
     bot.login(username=login, password=passsword)
-    username = input("Введите имя аккаунта поста:")
-    post_url = input("Введите ссылку на пост: ")
+    username = get_args().name
+    post_url = get_args().url
     if username and post_url:
         user_id = bot.get_user_id_from_username(username) \
             or exit("Неверное имя пользователя")
