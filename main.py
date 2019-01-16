@@ -5,6 +5,10 @@ import re
 import argparse
 from pprint import pprint
 
+
+USER_REGEXP = re.compile(r"(?:@)([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:\.(?!\.))){0,28}(?:[A-Za-z0-9_]))?)")
+
+
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", required=True, dest="url")
@@ -12,9 +16,8 @@ def get_args():
     return parser.parse_args()
 
 
-def get_taged_users(comment):
-    user_regexp = re.compile(r"(?:@)([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:\.(?!\.))){0,28}(?:[A-Za-z0-9_]))?)")
-    tagged_users = user_regexp.findall(comment)
+def get_taged_users(comment, regexp=USER_REGEXP):
+    tagged_users = regexp.findall(comment)
     return list(filter(lambda user: is_user_exists(user), tagged_users))
 
 
