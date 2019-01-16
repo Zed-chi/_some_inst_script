@@ -25,7 +25,7 @@ def is_user_exists(name):
     return bot.get_user_id_from_username(name) is not None
 
 
-def get_valid_users(comments, likers, followers):
+def get_valid_users_list_from_comments(comments, likers, followers):
     users = []
     for comment in comments:
         id = comment['user_id']
@@ -53,8 +53,8 @@ if __name__ == "__main__":
         likers = bot.get_media_likers(post_id)
         followers = bot.get_user_followers(user_id)
         comments = [x for x in bot.get_media_comments_all(post_id)]
-        valid_users = get_valid_users(comments, likers, followers)
-        names = set([user[1] for user in valid_users])
-        pprint("Пользователи выполнившие условия:\n{}".format(names))
+        valid_users = get_valid_users_list_from_comments(comments, likers, followers)
+        valid_users_names = set([user[1] for user in valid_users])
+        pprint("Пользователи выполнившие условия:\n{}".format(valid_users_names))
     else:
         print("Не введены данные")
