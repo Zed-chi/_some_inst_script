@@ -22,7 +22,7 @@ def get_taged_users(comment, regexp=USER_REGEXP):
 
 
 def is_user_exists(name):
-    return True if bot.get_user_id_from_username(name) else False
+    return bot.get_user_id_from_username(name) is not None
 
 
 def get_valid_users(comments, likers, followers):
